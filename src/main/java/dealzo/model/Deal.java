@@ -1,4 +1,4 @@
-package model;
+package dealzo.model;
 
 public class Deal {
 }
