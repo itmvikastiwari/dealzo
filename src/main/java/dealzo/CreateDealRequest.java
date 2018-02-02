@@ -1,6 +1,7 @@
 package dealzo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,11 +9,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateDealRequest {
     private static final long serialVersionUID = 1L;
 
@@ -25,10 +28,7 @@ public class CreateDealRequest {
     private String subcategoryName;
 
 
-    private String productTypeName;
-
-
-    private String productDescription;
+    private String description;
 
 
     private Long startTime;
@@ -37,7 +37,7 @@ public class CreateDealRequest {
     private Long endTime;
 
 
-    private String userName;
+    private String sellerName;
 
     private String email;
 
@@ -48,4 +48,8 @@ public class CreateDealRequest {
     String modelNo;
 
     String title;
+
+    List<String> imageLinks;
+
+
 }
