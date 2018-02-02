@@ -39,8 +39,8 @@ public class Deal extends BaseDocument {
     @Field("end_time")
     private Timestamp endTime;
 
-    @Field("user_name")
-    private String userName;
+    @Field("seller_name")
+    private String sellerName;
 
     @Field("email")
     private String email;
@@ -51,10 +51,10 @@ public class Deal extends BaseDocument {
     @Field("brand_name")
     String brandName;
 
-    @Field("model_no")
-    String modelNo;
+    @Field("model_name")
+    String modelName;
 
-    @Field("image_line")
+    @Field("image_link")
     List<String> imageUrl;
 
 }

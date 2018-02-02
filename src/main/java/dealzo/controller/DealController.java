@@ -34,7 +34,7 @@ public class DealController {
                 .email(createDealRequest.getEmail())
                 .mobileNo(createDealRequest.getMobileNo())
                 .brandName(createDealRequest.getBrandName())
-                .modelNo(createDealRequest.getModelNo())
+                .modelName(createDealRequest.getModelNo())
                 .build();
         dealRepository.save(deal);
         return DealzoResponseEntity.buildSuccessResponse(null);
