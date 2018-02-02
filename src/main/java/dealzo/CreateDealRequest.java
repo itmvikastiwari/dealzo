@@ -31,10 +31,10 @@ public class CreateDealRequest {
     private String productDescription;
 
 
-    private Date startTime;
+    private Long startTime;
 
 
-    private Date endTime;
+    private Long endTime;
 
 
     private String userName;
@@ -46,4 +46,6 @@ public class CreateDealRequest {
     String brandName;
 
     String modelNo;
+
+    String title;
 }

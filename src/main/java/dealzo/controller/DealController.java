@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Timestamp;
+
 @Controller
 @RequestMapping("/deals/v1")
 public class DealController {
@@ -25,8 +27,8 @@ public class DealController {
                 .categoryName(createDealRequest.getCategoryName())
                 .subcategoryName(createDealRequest.getSubcategoryName())
                 .productDescription(createDealRequest.getProductDescription())
-                .startTime(createDealRequest.getStartTime())
-                .endTime(createDealRequest.getEndTime())
+                .startTime(new Timestamp(createDealRequest.getStartTime()))
+                .endTime(new Timestamp(createDealRequest.getEndTime()))
                 .userName(createDealRequest.getUserName())
                 .email(createDealRequest.getEmail())
                 .mobileNo(createDealRequest.getMobileNo())
