@@ -17,6 +17,7 @@ public class BaseDocument implements Persistable<Serializable> {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Field("id")
     private String id;
 
     @Field("created_time")
