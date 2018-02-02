@@ -57,4 +57,10 @@ public class Deal extends BaseDocument {
     @Field("image_link")
     List<String> imageUrl;
 
+    @Field("quantity")
+    Integer quantity;
+
+    @Field("deal_type")
+    String dealType;
+
 }

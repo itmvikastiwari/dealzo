@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateDealRequest {
+public class DealRequest {
     private static final long serialVersionUID = 1L;
 
 
@@ -43,13 +43,17 @@ public class CreateDealRequest {
 
     private String mobileNo;
 
-    String brandName;
+    private String brandName;
 
-    String modelNo;
+    private String modelNo;
 
-    String title;
+    private String title;
 
-    List<String> imageLinks;
+    private List<String> imageLinks;
+
+    private Integer quantity;
+
+    private String dealType;
 
 
 }
