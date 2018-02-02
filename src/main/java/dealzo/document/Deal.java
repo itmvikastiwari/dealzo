@@ -21,7 +21,6 @@ public class Deal extends BaseDocument {
 
     private static final long serialVersionUID = 1L;
 
-
     @Field("category_name")
     private String categoryName;
 
@@ -33,6 +32,7 @@ public class Deal extends BaseDocument {
 
     @Field("product_description")
     private String productDescription;
+
     @Field("start_time")
     private Timestamp startTime;
 

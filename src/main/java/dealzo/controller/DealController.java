@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.sql.Timestamp;
 
 @Controller
-@RequestMapping("/deals")
+@RequestMapping("/deals/v1")
 public class DealController {
 
     @Autowired
     private DealRepository dealRepository;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE},
+    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> submitDeal(@RequestBody CreateDealRequest createDealRequest) {
         Deal deal = Deal.builder()
