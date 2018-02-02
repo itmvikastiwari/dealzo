@@ -5,7 +5,8 @@ public enum ErrorCode {
 	//COMMON ERRORS
 	INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
 	//Dealzo Error
-	DEALZO_SERVICE_ERROR(1001, "Dealzo Service Error");
+	DEALZO_SERVICE_ERROR(1001, "Dealzo Service Error"),
+	BAD_REQUEST(400, "Bad request");;
 
 
 	private int statusCode;

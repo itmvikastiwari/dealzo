@@ -26,19 +26,7 @@ public class DealController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> submitDeal(@RequestBody DealRequest dealRequest) {
-        Deal deal = Deal.builder()
-                .categoryName(dealRequest.getCategoryName())
-                .subcategoryName(dealRequest.getSubcategoryName())
-                .productDescription(dealRequest.getDescription())
-                .startTime(new Timestamp(dealRequest.getStartTime()*1000))
-                .endTime(new Timestamp(dealRequest.getEndTime()*1000))
-                .sellerName(dealRequest.getSellerName())
-                .email(dealRequest.getEmail())
-                .mobileNo(dealRequest.getMobileNo())
-                .brandName(dealRequest.getBrandName())
-                .modelName(dealRequest.getModelNo())
-                .quantity(dealRequest.getQuantity())
-                .build();
+        Deal deal = DealRequest.from(dealRequest);
         dealRepository.save(deal);
         return DealzoResponseEntity.buildSuccessResponse(null);
     }
