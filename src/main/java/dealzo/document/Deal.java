@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -27,13 +28,16 @@ public class Deal extends BaseDocument {
     @Field("subcategory_name")
     private String subcategoryName;
 
+    @Field("title")
+    private String title;
+
     @Field("product_description")
     private String productDescription;
     @Field("start_time")
-    private Date startTime;
+    private Timestamp startTime;
 
     @Field("end_time")
-    private Date endTime;
+    private Timestamp endTime;
 
     @Field("user_name")
     private String userName;
