@@ -96,7 +96,7 @@ public class DealRequest {
         if(endTime.before(Utils.getCurrentTimestamp())){
             throw new DealzoException("End time should be in future", ErrorCode.BAD_REQUEST);
         }
-        if(startTime.before(endTime)){
+        if(startTime.after(endTime)){
             throw new DealzoException("End time should be after start time", ErrorCode.BAD_REQUEST);
         }
 
