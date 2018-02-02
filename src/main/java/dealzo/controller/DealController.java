@@ -2,6 +2,7 @@ package dealzo.controller;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
+import dealzo.DealFilterRequest;
 import dealzo.DealRequest;
 import dealzo.document.Deal;
 import dealzo.repository.DealRepository;
@@ -43,12 +44,13 @@ public class DealController {
     }
 
     @RequestMapping(value = "fetch",method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> fetchDeal(@RequestBody DealRequest dealRequest){
-        if(dealRequest.getStartTime()==null || dealRequest.getEndTime()==null){
+    public ResponseEntity<?> fetchDeal(@RequestBody DealFilterRequest dealFilterRequest){
+        if(dealFilterRequest.getStartTime()==null || dealFilterRequest.getEndTime()==null){
             throw new IllegalArgumentException("startTime or endTime can not be null");
         }
         BasicDBObject query=new BasicDBObject();
-        query.put("startTime", BasicDBObjectBuilder.start("$gte",new Timestamp(dealRequest.getStartTime())));
+        query.put("startTime", BasicDBObjectBuilder.start("$gte",new Timestamp(dealFilterRequest.getStartTime())));
+        query.put("endTime",BasicDBObjectBuilder.start("$lte",new Timestamp(dealFilterRequest.getEndTime())));
 
         return DealzoResponseEntity.buildSuccessResponse(null);
     }

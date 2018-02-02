@@ -69,4 +69,7 @@ public class Deal extends BaseDocument {
     @Field("discount_price")
     Double discountPrice;
 
+    @Field("product_type")
+    String productType;
+
 }

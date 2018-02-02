@@ -18,4 +18,5 @@ public class DealFilterRequest {
     Long startTime;
     Long endTime;
     String dealType;
+    String brandName;
 }
