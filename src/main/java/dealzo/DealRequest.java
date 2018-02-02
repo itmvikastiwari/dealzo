@@ -55,5 +55,9 @@ public class DealRequest {
 
     private String dealType;
 
+    private Double sellingPrice;
+
+    private Double discountPrice;
+
 
 }

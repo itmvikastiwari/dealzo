@@ -63,4 +63,10 @@ public class Deal extends BaseDocument {
     @Field("deal_type")
     String dealType;
 
+    @Field("selling_price")
+    Double sellerPrice;
+
+    @Field("discount_price")
+    Double discountPrice;
+
 }
