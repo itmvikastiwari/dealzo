@@ -46,7 +46,7 @@ public class Deal extends BaseDocument {
     private String email;
 
     @Field("mobile_no")
-    private String mobileNo;
+     String mobileNo;
 
     @Field("brand_name")
     String brandName;

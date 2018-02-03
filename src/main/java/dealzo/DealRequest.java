@@ -90,9 +90,7 @@ public class DealRequest {
         }
         Timestamp startTime = new Timestamp(dealRequest.getStartTime()*1000);
         Timestamp endTime = new Timestamp(dealRequest.getEndTime()*1000);
-        if(startTime.before(Utils.getCurrentTimestamp())){
-            throw new DealzoException("Start time should be in future", ErrorCode.BAD_REQUEST);
-        }
+
         if(endTime.before(Utils.getCurrentTimestamp())){
             throw new DealzoException("End time should be in future", ErrorCode.BAD_REQUEST);
         }
