@@ -17,4 +17,5 @@ public class DealFilterRequest {
     String subcategoryName;
     String dealType;
     String brandName;
+    String filter;
 }

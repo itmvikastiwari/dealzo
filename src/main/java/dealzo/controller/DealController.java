@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -78,7 +79,8 @@ public class DealController {
                         .discountPrice(dealType.getDiscountPrice())
                         .sellerPrice(dealType.getSellerPrice())
                         .status(getDealStatus(dealType.getStartTime(), dealType.getEndTime()))
-                        .build()).collect(Collectors.toList());
+                        .build()).filter(dealFilterResponse -> getFilter(dealFilterResponse, dealFilterRequest)).collect(Collectors.toList());
+
             }
             return DealzoResponseEntity.buildSuccessResponse(dealFilterResponses);
         } catch (Exception e) {
@@ -110,6 +112,11 @@ public class DealController {
         }
 
     }
+
+    private boolean getFilter(DealFilterResponse dealFilterResponse, DealFilterRequest dealFilterRequest) {
+        return dealFilterRequest.getFilter() == null || dealFilterResponse.getStatus().equalsIgnoreCase(dealFilterRequest.getFilter());
+    }
+
 
     private String getDealStatus(Date startTime, Date endTime) {
         if (startTime.after(new Date())) {
