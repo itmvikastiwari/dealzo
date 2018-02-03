@@ -15,10 +15,6 @@ public class DealFilterRequest {
     String productType;
     String categoryName;
     String subcategoryName;
-    Long startTime;
-    Long endTime;
     String dealType;
     String brandName;
-    Double startPrice;
-    Double endPrice;
 }
