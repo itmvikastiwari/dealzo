@@ -88,7 +88,7 @@ public class DealRequest {
     }
 
     private static void validate(DealRequest dealRequest) {
-        if(null == dealRequest.getStartTime()){
+      /*  if(null == dealRequest.getStartTime()){
             throw new DealzoException("Invalid start time", ErrorCode.BAD_REQUEST);
         }
         if(null == dealRequest.getEndTime()){
@@ -102,7 +102,7 @@ public class DealRequest {
         }
         if(startTime.after(endTime)){
             throw new DealzoException("End time should be after start time", ErrorCode.BAD_REQUEST);
-        }
+        }*/
 
         if(StringUtils.isEmpty(dealRequest.getSubcategoryName())){
             throw new DealzoException("Invalid Sub category name", ErrorCode.BAD_REQUEST);

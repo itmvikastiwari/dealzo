@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface DealRepository extends MongoRepository<Deal, String>, QueryByExampleExecutor<Deal> {
+    List<Deal> findByTitle(String title);
 
 }

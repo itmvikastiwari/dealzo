@@ -7,6 +7,7 @@ import dealzo.document.Deal;
 import dealzo.repository.DealRepository;
 import dealzo.response.DealFilterResponse;
 import dealzo.response.DealzoResponseEntity;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
@@ -131,6 +132,15 @@ public class DealController {
     @RequestMapping(value = "fetch2", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> fetchDeal2(@RequestBody DealFilterRequest dealFilterRequest){
         return DealzoResponseEntity.buildSuccessResponse(dealRepository.findAll());
+    }
+
+    @RequestMapping(value="delete",method=RequestMethod.GET)
+    public ResponseEntity<?> deleteDeals(@RequestParam("title") String title){
+        List<Deal> deal=dealRepository.findByTitle(title);
+        if(CollectionUtils.isNotEmpty(deal)){
+            deal.forEach(deal1 -> dealRepository.delete(deal1));
+        }
+        return DealzoResponseEntity.buildSuccessResponse(null);
     }
 
 }
