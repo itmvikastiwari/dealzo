@@ -127,4 +127,10 @@ public class DealController {
         }
         return "CURRENT";
     }
+
+    @RequestMapping(value = "fetch2", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> fetchDeal2(@RequestBody DealFilterRequest dealFilterRequest){
+        return DealzoResponseEntity.buildSuccessResponse(dealRepository.findAll());
+    }
+
 }
