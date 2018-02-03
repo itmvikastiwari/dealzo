@@ -19,7 +19,7 @@ import java.util.Set;
 @RequestMapping(value ="dealzo/v1")
 public class FilterController {
 
-    @Autowired
+   /* @Autowired
     private DealRepository dealRepository;
 
     @RequestMapping(value ="filter", method = RequestMethod.GET)
@@ -61,6 +61,6 @@ public class FilterController {
                 .productType(productType)
                 .build();
         return DealzoResponseEntity.buildSuccessResponse(response);
-    }
+    }*/
 
 }

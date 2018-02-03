@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -70,8 +71,8 @@ public class DealRequest {
                 .categoryName(dealRequest.getCategoryName())
                 .subcategoryName(dealRequest.getSubcategoryName())
                 .productDescription(dealRequest.getDescription())
-                .startTime(new Timestamp(dealRequest.getStartTime()*1000))
-                .endTime(new Timestamp(dealRequest.getEndTime()*1000))
+                .startTime(new Date(dealRequest.getStartTime()*1000))
+                .endTime(new Date(dealRequest.getEndTime()*1000))
                 .sellerName(dealRequest.getSellerName())
                 .email(dealRequest.getEmail())
                 .mobileNo(dealRequest.getMobileNo())

@@ -5,8 +5,10 @@ import dealzo.DealFilterRequest;
 import dealzo.DealRequest;
 import dealzo.document.Deal;
 import dealzo.repository.DealRepository;
+import dealzo.response.DealFilterResponse;
 import dealzo.response.DealzoResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/deals/v1")
@@ -28,61 +32,64 @@ public class DealController {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> submitDeal(@RequestBody DealRequest dealRequest) {
         Deal deal = DealRequest.from(dealRequest);
-       deal= dealRepository.save(deal);
+        deal = dealRepository.save(deal);
         return DealzoResponseEntity.buildSuccessResponse(deal);
     }
 
     @RequestMapping(value = "fetch", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> fetchDeal(@RequestBody DealFilterRequest dealFilterRequest) {
-        if (dealFilterRequest.getStartTime() == null || dealFilterRequest.getEndTime() == null) {
-            throw new IllegalArgumentException("startTime or endTime can not be null");
-        }
-        MongoClient mongoClient = new MongoClient("192.168.124.33", 27019);
-        DB db = mongoClient.getDB("dealzo_db");
-
-        DBCollection collection = db.getCollection("deal");
-        ;
-        BasicDBObject query = new BasicDBObject();
-        query.put("startTime", new BasicDBObject("$gte", new Timestamp(dealFilterRequest.getStartTime()*1000)));
-        query.put("endTime", new BasicDBObject("$lte", new Timestamp(dealFilterRequest.getEndTime()*1000)));
-        if (dealFilterRequest.getBrandName() != null) {
-            query.put("brandName", dealFilterRequest.getBrandName());
-        }
-        if (dealFilterRequest.getCategoryName() != null) {
-            query.put("categoryName", dealFilterRequest.getCategoryName());
-        }
+        Deal deal = new Deal();
         if (dealFilterRequest.getDealType() != null) {
-            query.put("dealType", dealFilterRequest.getDealType());
-        }
-        if (dealFilterRequest.getSubcategoryName() != null) {
-            query.put("categoryName", dealFilterRequest.getCategoryName());
+            deal.setDealType(dealFilterRequest.getDealType());
         }
         if (dealFilterRequest.getProductType() != null) {
-            query.put("productType", dealFilterRequest.getProductType());
+            deal.setProductType(dealFilterRequest.getProductType());
         }
-        if (dealFilterRequest.getStartPrice() != null && dealFilterRequest.getEndTime() != null) {
-            query.put("discountPrice", BasicDBObjectBuilder.start("$gte", dealFilterRequest.getStartPrice()).add("$lte", dealFilterRequest.getEndPrice()).get());
+        if (dealFilterRequest.getSubcategoryName() != null) {
+            deal.setSubcategoryName(dealFilterRequest.getSubcategoryName());
         }
+        if (dealFilterRequest.getBrandName() != null) {
+            deal.setBrandName(dealFilterRequest.getBrandName());
+        }
+        if (dealFilterRequest.getCategoryName() != null) {
+            deal.setCategoryName(dealFilterRequest.getCategoryName());
+        }
+        List<Deal> deals = dealRepository.findAll(Example.of(deal));
 
-        DBCursor dbCursor = collection.find(query);
-        List<Deal> dealList = new ArrayList<>();
-        dbCursor.forEach(dbObject ->
-                Deal.builder()
-                        .quantity((Integer) dbObject.get("quantity"))
-                        .mobileNo((String) dbObject.get("mobileNo"))
-                        .brandName((String) dbObject.get("brandName"))
-                        .email((String) dbObject.get("email"))
-                        .productDescription((String) dbObject.get("productDescription"))
-                        .subcategoryName((String) dbObject.get("subcategoryName"))
-                        .categoryName((String) dbObject.get("categoryName"))
-                        .endTime((Timestamp) dbObject.get("endTime"))
-                        .startTime((Timestamp) dbObject.get("startTime"))
-                        .imageUrl((List<String>) dbObject.get("imageUrl"))
-                        .title((String) dbObject.get("title"))
-                        .sellerPrice((Double) dbObject.get("sellerPrice"))
-                        .discountPrice((Double) dbObject.get("discountPrice"))
-                        .dealType((String) dbObject.get("dealType"))
-                        .build());
-        return DealzoResponseEntity.buildSuccessResponse(null);
+       List<DealFilterResponse> dealFilterResponses = null;
+       if(deals!=null){
+           dealFilterResponses=deals.stream().map(dealType -> DealFilterResponse.builder()
+                      .id(dealType.getId())
+                      .categoryName(dealType.getCategoryName())
+                      .subcategoryName(dealType.getSubcategoryName())
+                      .title(dealType.getTitle())
+                      .productDescription(dealType.getProductDescription())
+                      .startTime(dealType.getStartTime().getTime()/1000)
+                      .endTime(dealType.getEndTime().getTime()/1000)
+                      .sellerName(dealType.getSellerName())
+                      .email(dealType.getEmail())
+                      .mobileNo(dealType.getMobileNo())
+                      .brandName(dealType.getBrandName())
+                      .modelName(dealType.getModelName())
+                      .imageUrl(dealType.getImageUrl())
+                      .quantity(dealType.getQuantity())
+                      .dealType(dealType.getDealType())
+                      .discountPrice(dealType.getDiscountPrice())
+                      .sellerPrice(dealType.getSellerPrice())
+                      .status(getDealStatus(dealType.getStartTime(),dealType.getEndTime()))
+                      .build()).collect(Collectors.toList());
+       }
+       return DealzoResponseEntity.buildSuccessResponse(dealFilterResponses);
+
+    }
+
+    private String getDealStatus(Date startTime, Date endTime) {
+        if(startTime.after(new Date())){
+            return "UPCOMING";
+        }
+        if(endTime.before(new Date())){
+            return "MISSED";
+        }
+        return "CURRENT";
     }
 }

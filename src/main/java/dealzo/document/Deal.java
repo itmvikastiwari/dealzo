@@ -34,10 +34,10 @@ public class Deal extends BaseDocument {
     private String productDescription;
 
     @Field("start_time")
-    private Timestamp startTime;
+    private Date startTime;
 
     @Field("end_time")
-    private Timestamp endTime;
+    private Date endTime;
 
     @Field("seller_name")
     private String sellerName;
