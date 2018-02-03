@@ -49,7 +49,7 @@ public class DealRequest {
 
     private String brandName;
 
-    private String modelNo;
+    private String modelName;
 
     private String title;
 
@@ -59,7 +59,7 @@ public class DealRequest {
 
     private String dealType;
 
-    private Double sellingPrice;
+    private Double sellerPrice;
 
     private Double discountPrice;
 
@@ -76,7 +76,12 @@ public class DealRequest {
                 .email(dealRequest.getEmail())
                 .mobileNo(dealRequest.getMobileNo())
                 .brandName(dealRequest.getBrandName())
-                .modelName(dealRequest.getModelNo())
+                .modelName(dealRequest.getModelName())
+                .title(dealRequest.getTitle())
+                .sellerPrice(dealRequest.getSellerPrice())
+                .discountPrice(dealRequest.getDiscountPrice())
+                .dealType(dealRequest.getDealType())
+                .imageUrl(dealRequest.getImageLinks())
                 .quantity(dealRequest.getQuantity() == null ? 1 : dealRequest.getQuantity())
                 .build();
     }

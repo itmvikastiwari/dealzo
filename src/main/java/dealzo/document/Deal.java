@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Id;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -34,10 +32,10 @@ public class Deal extends BaseDocument {
     private String productDescription;
 
     @Field("start_time")
-    private Timestamp startTime;
+    private Date startTime;
 
     @Field("end_time")
-    private Timestamp endTime;
+    private Date endTime;
 
     @Field("seller_name")
     private String sellerName;
